@@ -11,6 +11,7 @@ import {
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { MoveUpRight } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export function NavbarApp() {
@@ -42,7 +43,11 @@ export function NavbarApp() {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className='flex items-center gap-4'>
-          <NavbarButton variant='primary' className='flex items-center gap-2'>
+          <NavbarButton
+            variant='primary'
+            className='flex items-center gap-2'
+            href='contact'
+          >
             Let's talk <MoveUpRight width={16} />
           </NavbarButton>
         </div>
