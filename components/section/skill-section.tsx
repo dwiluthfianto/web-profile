@@ -1,30 +1,7 @@
-import { databases } from "@/app/appwrite";
-import { Query } from "appwrite";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export async function SkillSection() {
-  let res = await databases
-    .listDocuments(
-      process.env.APPWRITE_DATABASE_ID!,
-      process.env.APPWRITE_BLOG_COLLECTION_ID!,
-      [Query.orderDesc("$createdAt")]
-    )
-    .then(function (response) {
-      return response.documents;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
-  if (!res || res.length === 0) {
-    return (
-      <div className='text-center text-slate-500 dark:text-slate-400'>
-        No skills available.
-      </div>
-    );
-  }
-
+export function SkillSection() {
   return (
     <section className='space-y-8 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <div className='md:cols-span-1'>

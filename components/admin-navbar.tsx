@@ -22,25 +22,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import Link from "next/link";
 
-export function NavbarApp() {
+export function NavbarAdmin() {
   const navItems = [
     {
-      name: "Home",
-      link: "/",
-    },
-    {
       name: "Projects",
-      link: "/projects",
+      link: "/admin/projects",
     },
     {
       name: "Blog",
-      link: "/blogs",
+      link: "/admin/blogs",
     },
     {
       name: "About",
-      link: "/about",
+      link: "/admin/about",
+    },
+    {
+      name: "Messages",
+      link: "/admin/messages",
     },
   ];
 
@@ -62,13 +61,6 @@ export function NavbarApp() {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className='flex items-center gap-4'>
-          <NavbarButton
-            variant='primary'
-            className='flex items-center gap-2'
-            href='contact'
-          >
-            Let's talk <MoveUpRight width={16} />
-          </NavbarButton>
           {!isPending && data && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild className='cursor-pointer'>
@@ -78,11 +70,9 @@ export function NavbarApp() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align='end'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem asChild className='cursor-pointer'>
-                  <Link href={"/admin/account"}>
-                    <CircleUser />
-                    Account
-                  </Link>
+                <DropdownMenuItem>
+                  <CircleUser />
+                  Account
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <LayoutDashboard />

@@ -1,29 +1,11 @@
-import { databases } from "@/app/appwrite";
+"use client";
+
 import { HeaderImage } from "@/components/section/project-section";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { Query } from "appwrite";
+import { useListProject } from "@/hooks/useProject";
 
-export default async function ProjectsPage() {
-  let res = await databases
-    .listDocuments(
-      process.env.APPWRITE_DATABASE_ID!,
-      process.env.APPWRITE_PROJECT_COLLECTION_ID!,
-      [Query.orderDesc("$createdAt")]
-    )
-    .then(function (response) {
-      return response.documents;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
-  if (!res || res.length === 0) {
-    return (
-      <div className='p-4 space-y-8'>
-        <h1>Project not found</h1>
-      </div>
-    );
-  }
+export default function ProjectsPage() {
+  const { data, isPending } = useListProject(25);
 
   return (
     <div className='p-4 space-y-8'>
@@ -36,17 +18,21 @@ export default async function ProjectsPage() {
           A collection of projects I've worked on.
         </p>
       </div>
-      <BentoGrid className='md:auto-rows-[20rem] md:grid-cols-2 mt-2'>
-        {res?.map((item, i) => (
-          <BentoGridItem
-            key={i}
-            title={item.title}
-            description={item.description}
-            header={<HeaderImage url={item.image} />}
-            link={item.link}
-          />
-        ))}
-      </BentoGrid>
+      {isPending ? null : data?.length === 0 ? (
+        <h1 className='text-center'>Projects not found</h1>
+      ) : (
+        <BentoGrid className='md:auto-rows-[20rem] md:grid-cols-2 mt-2'>
+          {data?.map((item, i) => (
+            <BentoGridItem
+              key={i}
+              title={item.title}
+              description={item.description}
+              header={<HeaderImage fileId={item.image} />}
+              link={item.link}
+            />
+          ))}
+        </BentoGrid>
+      )}
     </div>
   );
 }

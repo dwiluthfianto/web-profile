@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-import { account, ID } from "../../appwrite";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +13,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { account } from "../appwrite";
 
 const loginSchema = z.object({
   email: z.string().email(),

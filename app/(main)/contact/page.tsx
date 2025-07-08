@@ -14,6 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useMessageMutations } from "@/hooks/useMessage";
+import { ContactSchema } from "@/lib/services/message.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, MoveUpRight } from "lucide-react";
 import Link from "next/link";
@@ -21,20 +23,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
-
-const ContactSchema = z.object({
-  name: z.string().min(1, { message: "Name should not be empty" }),
-  businessEmail: z
-    .string()
-    .min(1, { message: "Business email should not be empty" })
-    .email(),
-  phoneNumber: z
-    .string()
-    .min(1, { message: "Phone number should not be empty" }),
-  companyName: z.string().optional(),
-  subject: z.string().min(1, { message: "Subject should not be empty" }),
-  message: z.string().min(1, { message: "Message should not be empty" }),
-});
 
 export default function ContactPage() {
   const [acc, setAcc] = useState<boolean>(false);
@@ -51,18 +39,12 @@ export default function ContactPage() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof ContactSchema>) => {
-    console.log(data);
-    const res = await databases.createDocument(
-      process.env.APPWRITE_DATABASE_ID!,
-      process.env.APPWRITE_MESSAGE_COLLECTION_ID!,
-      ID.unique(),
-      data
-    );
+  const { createMessageMutation } = useMessageMutations();
 
-    toast.success("Message has successfully sent", {
-      description: "Please wait for the response, Thank you.",
-    });
+  const onSubmit = async (data: z.infer<typeof ContactSchema>) => {
+    await createMessageMutation.mutateAsync(data);
+
+    form.reset();
   };
 
   return (
@@ -204,8 +186,11 @@ export default function ContactPage() {
                 </Label>
               </div>
             </div>
-            <Button type='submit' disabled={!acc}>
-              Submit
+            <Button
+              type='submit'
+              disabled={!acc || createMessageMutation.isPending}
+            >
+              {createMessageMutation.isPending ? "Submiting.." : "Submit"}
             </Button>
           </form>
         </Form>

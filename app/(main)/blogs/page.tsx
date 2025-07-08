@@ -1,23 +1,7 @@
-import { databases } from "@/app/appwrite";
+"use client";
 import { BlogSection } from "@/components/section/blog-section";
-import { HeaderImage } from "@/components/section/project-section";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { Query } from "appwrite";
 
-export default async function BlogsPage() {
-  let res = await databases
-    .listDocuments(
-      process.env.APPWRITE_DATABASE_ID!,
-      process.env.APPWRITE_PROJECT_COLLECTION_ID!,
-      [Query.orderDesc("$createdAt")]
-    )
-    .then(function (response) {
-      return response.documents;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
+export default function BlogsPage() {
   return (
     <div className='p-4 space-y-8'>
       <div>
