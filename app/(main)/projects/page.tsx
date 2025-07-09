@@ -2,21 +2,37 @@
 
 import { HeaderImage } from "@/components/section/project-section";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { Button } from "@/components/ui/button";
 import { useListProject } from "@/hooks/useProject";
+import { useUser } from "@/hooks/useUser";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function ProjectsPage() {
+  const { data: user } = useUser();
   const { data, isPending } = useListProject(25);
 
   return (
     <div className='p-4 space-y-8'>
       <div>
-        <h1 className='text-4xl font-bold text-center'>
-          <span className='text-muted-foreground'>/</span>projects
-          <span className='text-muted-foreground'>.</span>
-        </h1>
-        <p className='text-center text-muted-foreground'>
-          A collection of projects I've worked on.
-        </p>
+        <div>
+          <h1 className='text-4xl font-bold text-center'>
+            <span className='text-muted-foreground'>/</span>projects
+            <span className='text-muted-foreground'>.</span>
+          </h1>
+          <p className='text-center text-muted-foreground'>
+            A collection of projects I've worked on.
+          </p>
+        </div>
+        {user && (
+          <div className='flex justify-end'>
+            <Button asChild>
+              <Link href='/projects/create'>
+                <Plus /> New Project
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
       {isPending ? null : data?.length === 0 ? (
         <h1 className='text-center'>Projects not found</h1>

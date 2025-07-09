@@ -1,4 +1,15 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
+import { Ellipsis, Eraser, SquarePen } from "lucide-react";
+import { Button } from "./button";
+import { useUser } from "@/hooks/useUser";
 
 export const BentoGrid = ({
   className,
@@ -30,12 +41,34 @@ export const BentoGridItem = ({
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
-  link?: string;
+  link: string;
   header?: React.ReactNode;
   icon?: React.ReactNode;
 }) => {
+  const { data } = useUser();
   return (
-    <a className='cursor-pointer' href={link}>
+    <Link className='cursor-pointer relative' href={link}>
+      {data && (
+        <DropdownMenu>
+          <DropdownMenuTrigger className='absolute top-2 right-2 z-20 p-1 bg-black/40 text-white dark:bg-white/40 dark:text-black rounded-lg cursor-pointer shadow'>
+            <Ellipsis />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Setting</DropdownMenuLabel>
+            <DropdownMenuItem asChild className='cursor-pointer'>
+              <Link href={""}>
+                <SquarePen />
+                Edit
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className='cursor-pointer'>
+              <Link href={""}>
+                <Eraser /> Delete
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
       <div
         className={cn(
           "group/bento shadow-input row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-neutral-200 bg-white p-4 transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:bg-black dark:shadow-none",
@@ -53,6 +86,6 @@ export const BentoGridItem = ({
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };

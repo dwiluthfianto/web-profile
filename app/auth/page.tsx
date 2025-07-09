@@ -20,24 +20,22 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { account } from "../appwrite";
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
+import { LoginSchema } from "@/lib/services/user.service";
+import { useUserMutations } from "@/hooks/useUser";
 
 export function LoginPage() {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
-    await account.createEmailPasswordSession(values.email, values.password);
+  const { loginMutation } = useUserMutations();
+
+  async function onSubmit(data: z.infer<typeof LoginSchema>) {
+    await loginMutation.mutateAsync(data);
   }
 
   return (
@@ -80,8 +78,12 @@ export function LoginPage() {
               />
             </CardContent>
             <CardFooter className='flex-col gap-2'>
-              <Button type='submit' className='w-full'>
-                Login
+              <Button
+                type='submit'
+                className='w-full'
+                disabled={loginMutation.isPending}
+              >
+                {loginMutation.isPending ? "Loging.." : "Login"}
               </Button>
             </CardFooter>
           </form>

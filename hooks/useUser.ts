@@ -1,6 +1,8 @@
 import {
   getUser,
   getUserProfile,
+  login,
+  LoginSchema,
   logout,
   ProfileSchema,
   updateUserProfile,
@@ -43,12 +45,27 @@ export const useUserProfile = () => {
 
 export const useUserMutations = () => {
   const queryClient = useQueryClient();
+  const loginMutation = useMutation({
+    mutationFn: async (data: z.infer<typeof LoginSchema>) => {
+      return await login(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   const logoutMutation = useMutation({
     mutationFn: async () => {
       return await logout();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 
@@ -72,6 +89,7 @@ export const useUserMutations = () => {
   });
 
   return {
+    loginMutation,
     logoutMutation,
     updateUserProfileMutation,
   };

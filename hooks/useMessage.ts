@@ -13,6 +13,9 @@ export const useMessageMutations = () => {
         description: "Please wait for the response, Thank you.",
       });
     },
+    onError: (err) => {
+      toast.error(err.message);
+    },
   });
 
   return {

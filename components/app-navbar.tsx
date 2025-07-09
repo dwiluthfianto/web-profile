@@ -46,7 +46,7 @@ export function NavbarApp() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { data, isPending } = useUser();
+  const { data } = useUser();
   const { logoutMutation } = useUserMutations();
 
   const handleLogout = async () => {
@@ -69,7 +69,7 @@ export function NavbarApp() {
           >
             Let's talk <MoveUpRight width={16} />
           </NavbarButton>
-          {!isPending && data && (
+          {data && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild className='cursor-pointer'>
                 <Avatar>
@@ -79,7 +79,7 @@ export function NavbarApp() {
               <DropdownMenuContent align='end'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuItem asChild className='cursor-pointer'>
-                  <Link href={"/admin/account"}>
+                  <Link href={"/account"}>
                     <CircleUser />
                     Account
                   </Link>

@@ -20,6 +20,15 @@ export const getUser = async () => {
   return await account.get();
 };
 
+export const LoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+export const login = async (data: z.infer<typeof LoginSchema>) => {
+  return await account.createEmailPasswordSession(data.email, data.password);
+};
+
 export const logout = async () => {
   return await account.deleteSession("current");
 };
