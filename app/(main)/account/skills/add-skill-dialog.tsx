@@ -23,6 +23,7 @@ import { useFileMutations } from "@/hooks/useStorage";
 import { SkillSchema } from "@/lib/services/skill.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -51,8 +52,14 @@ export default function AddSkillDialog({
     }
     await createSkillMutation.mutateAsync(data);
 
+    form.reset({
+      title: "",
+      image: "",
+      imageFile: undefined,
+    });
     onOpenChange(false);
   };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-[524px]'>

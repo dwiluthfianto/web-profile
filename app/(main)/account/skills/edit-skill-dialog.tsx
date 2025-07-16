@@ -49,7 +49,7 @@ export default function EditSkillDialog({
     },
   });
 
-  const { updateSkillMutation } = useSkillMutations();
+  const { updateSkillMutation, deleteSkillMutation } = useSkillMutations();
   const { createFileMutation } = useFileMutations();
 
   const onSubmit = async (data: z.infer<typeof SkillSchema>) => {
@@ -57,6 +57,12 @@ export default function EditSkillDialog({
       data.image = (await createFileMutation.mutateAsync(data.imageFile)).$id;
     }
     await updateSkillMutation.mutateAsync({ documentId, data });
+
+    onOpenChange(false);
+  };
+
+  const handleDelete = async () => {
+    await deleteSkillMutation.mutateAsync(documentId);
 
     onOpenChange(false);
   };
@@ -158,21 +164,19 @@ export default function EditSkillDialog({
                 )}
               />
             </div>
-            <DialogFooter className='mt-4'>
-              <DialogClose asChild>
-                <Button variant='outline'>Cancel</Button>
-              </DialogClose>
+            <div className='flex justify-between mt-4'>
               <Button
-                type='submit'
-                disabled={
-                  updateSkillMutation.isPending || createFileMutation.isPending
-                }
+                variant='outline'
+                className='cursor-pointer'
+                onClick={handleDelete}
+                type='button'
               >
-                {updateSkillMutation.isPending || createFileMutation.isPending
-                  ? "Submiting.."
-                  : "Submit"}
+                Delete Skill
               </Button>
-            </DialogFooter>
+              <Button type='submit' disabled={updateSkillMutation.isPending}>
+                {updateSkillMutation.isPending ? "Submiting.." : "Submit"}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>
