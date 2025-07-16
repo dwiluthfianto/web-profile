@@ -14,7 +14,7 @@ export const ExperienceSchema = z.object({
   ]),
   description: z.string().min(1, "Title should not be empty").max(500),
   startDate: z.date(),
-  endDate: z.date(),
+  endDate: z.date().optional(),
 });
 
 export const getListExperience = async () => {
@@ -30,6 +30,16 @@ export const getListExperience = async () => {
     .catch(function (error) {
       console.error(error);
     });
+
+  return res;
+};
+
+export const getExperienceDetail = async (documentId: string) => {
+  let res = await databases.getDocument(
+    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+    process.env.NEXT_PUBLIC_APPWRITE_EXPERIENCE_COLLECTION_ID!,
+    documentId
+  );
 
   return res;
 };

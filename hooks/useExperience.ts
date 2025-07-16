@@ -2,6 +2,7 @@ import {
   createExperience,
   deleteExperience,
   ExperienceSchema,
+  getExperienceDetail,
   getListExperience,
   updateExperience,
 } from "@/lib/services/experience.service";
@@ -15,6 +16,20 @@ export const useListExperience = () => {
     queryFn: () => getListExperience(),
     staleTime: Infinity,
     refetchOnWindowFocus: false,
+  });
+
+  return {
+    isPending,
+    error,
+    data,
+    refetch,
+  };
+};
+
+export const useExperienceDetail = (documentId: string) => {
+  const { isPending, error, data, refetch } = useQuery({
+    queryKey: ["list-experience", documentId],
+    queryFn: () => getExperienceDetail(documentId),
   });
 
   return {

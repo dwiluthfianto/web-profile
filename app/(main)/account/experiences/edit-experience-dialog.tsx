@@ -33,22 +33,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useExperienceMutations } from "@/hooks/useExperience";
+import {
+  useExperienceDetail,
+  useExperienceMutations,
+} from "@/hooks/useExperience";
 import { ExperienceSchema } from "@/lib/services/experience.service";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-export default function AddExperienceDialog({
+export default function EditExperienceDialog({
+  documentId,
   open,
   onOpenChange,
 }: {
+  documentId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const { data } = useExperienceDetail(documentId);
   const form = useForm<z.infer<typeof ExperienceSchema>>({
     resolver: zodResolver(ExperienceSchema),
     defaultValues: {
@@ -61,21 +68,42 @@ export default function AddExperienceDialog({
     },
   });
 
-  const { createExperienceMutation } = useExperienceMutations();
+  const { updateExperienceMutation, deleteExperienceMutation } =
+    useExperienceMutations();
 
   const onSubmit = async (data: z.infer<typeof ExperienceSchema>) => {
-    await createExperienceMutation.mutateAsync(data);
+    await updateExperienceMutation.mutateAsync({ documentId, data });
 
     onOpenChange(false);
   };
+
+  const handleDelete = async () => {
+    await deleteExperienceMutation.mutateAsync(documentId);
+
+    onOpenChange(false);
+  };
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        title: data.title,
+        description: data.description,
+        company: data.company,
+        employmentType: data.employmentType,
+        startDate: new Date(data.startDate),
+        endDate: data.endDate ? new Date(data.endDate) : undefined,
+      });
+    }
+  }, [data, form]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-[524px]'>
         <DialogHeader>
-          <DialogTitle>Add Experience</DialogTitle>
+          <DialogTitle>Edit Experience</DialogTitle>
           <DialogDescription>
-            Fill in the details of your new experience. Click save when
-            you&apos;re done.
+            Fill in the details of your experience. Click save when you&apos;re
+            done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -262,17 +290,22 @@ export default function AddExperienceDialog({
                 />
               </div>
             </ScrollArea>
-            <DialogFooter className='mt-4'>
-              <DialogClose asChild>
-                <Button variant='outline'>Cancel</Button>
-              </DialogClose>
+            <div className='flex justify-between mt-4'>
+              <Button
+                variant='outline'
+                className='cursor-pointer'
+                onClick={handleDelete}
+                type='button'
+              >
+                Delete Experience
+              </Button>
               <Button
                 type='submit'
-                disabled={createExperienceMutation.isPending}
+                disabled={updateExperienceMutation.isPending}
               >
-                {createExperienceMutation.isPending ? "Submiting.." : "Submit"}
+                {updateExperienceMutation.isPending ? "Submiting.." : "Submit"}
               </Button>
-            </DialogFooter>
+            </div>
           </form>
         </Form>
       </DialogContent>
