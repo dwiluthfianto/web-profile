@@ -45,6 +45,8 @@ export default function ProjectsPage() {
               description={item.description}
               header={<HeaderImage fileId={item.image} />}
               link={item.link}
+              slug={item.slug}
+              id={item.$id}
             />
           ))}
         </BentoGrid>

@@ -1,15 +1,44 @@
 import { useListExperience } from "@/hooks/useExperience";
+import { useUser } from "@/hooks/useUser";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { Plus, SquarePen } from "lucide-react";
+import { useState } from "react";
+import AddExperienceDialog from "@/app/(main)/account/experiences/add-experience-dialog";
 
 export function ExperienceSection() {
+  const { data: user } = useUser();
   const { data, isPending } = useListExperience();
+  const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
 
   return (
     <section className='space-y-8 grid grid-cols-1 md:grid-cols-3 gap-4'>
-      <div className='md:col-span-1'>
+      <div className='md:col-span-1 space-y-4'>
         <h1 className='text-4xl font-bold'>
           <span className='text-muted-foreground'>/</span>experiences
           <span className='text-muted-foreground'>.</span>
         </h1>
+        {user && (
+          <>
+            <div className='flex gap-2 item-center'>
+              <Button variant={"outline"} asChild>
+                <Link href={"/account/experiences"}>
+                  <SquarePen />
+                </Link>
+              </Button>
+              <Button
+                variant={"outline"}
+                onClick={() => setAddDialogOpen(true)}
+              >
+                <Plus />
+              </Button>
+            </div>
+            <AddExperienceDialog
+              open={addDialogOpen}
+              onOpenChange={setAddDialogOpen}
+            />
+          </>
+        )}
       </div>
       <div className='md:col-span-2'>
         {isPending ? null : data?.length === 0 ? (

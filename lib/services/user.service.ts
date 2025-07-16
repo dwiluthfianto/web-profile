@@ -7,9 +7,9 @@ export const ProfileSchema = z.object({
   subheadline: z
     .string()
     .min(1, { message: "Subheadline should not be empty" })
-    .max(100),
+    .max(150),
   about: z.string().min(1, { message: "About should not be empty" }).max(500),
-  todo: z.string().min(1, { message: "Todo should not be empty" }).max(50),
+  todo: z.string().min(1, { message: "Todo should not be empty" }).max(100),
   image: z.string().min(1, { message: "Image should not be empty" }),
   logo: z.string().min(1, { message: "Logo should not be empty" }),
   logoFile: z.instanceof(File).optional(),

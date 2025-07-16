@@ -1,6 +1,5 @@
 "use client";
 
-import { databases, ID } from "@/app/appwrite";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +17,9 @@ import { useFileMutations, useFileView } from "@/hooks/useStorage";
 import { useUserMutations, useUserProfile } from "@/hooks/useUser";
 import { ProfileSchema } from "@/lib/services/user.service";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MoveLeft } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -31,6 +32,8 @@ export default function ProfilePage() {
   const { data: fileLogo, isPending: pendingFileLogo } = useFileView(
     profile?.logo
   );
+
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -78,14 +81,19 @@ export default function ProfilePage() {
 
   return (
     <div className='p-4 space-y-8'>
-      <div>
-        <h1 className='text-4xl font-bold'>
-          <span className='text-muted-foreground'>/</span>Account
-          <span className='text-muted-foreground'>.</span>
-        </h1>
-        <p className='text-muted-foreground'>
-          View and update your account details and preferences.
-        </p>
+      <div className='flex items-center gap-6'>
+        <Button onClick={() => router.back()}>
+          <MoveLeft />
+        </Button>
+        <div>
+          <h1 className='text-4xl font-bold'>
+            <span className='text-muted-foreground'>/</span>account
+            <span className='text-muted-foreground'>.</span>
+          </h1>
+          <p className='text-muted-foreground'>
+            View and update your account details and preferences.
+          </p>
+        </div>
       </div>
       <div>
         <Form {...form}>
@@ -210,7 +218,7 @@ export default function ProfilePage() {
                       {...field}
                       type='text'
                       placeholder='Enter your subheadline'
-                      maxLength={100}
+                      maxLength={150}
                     />
                   </FormControl>
                   <FormMessage />

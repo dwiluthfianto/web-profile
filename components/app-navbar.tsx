@@ -56,7 +56,7 @@ export function NavbarApp() {
   };
 
   return (
-    <Navbar className='top-0 '>
+    <Navbar className='top-0'>
       {/* Desktop Navigation */}
       <NavBody>
         <NavbarLogo />
@@ -84,10 +84,6 @@ export function NavbarApp() {
                     Account
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <LayoutDashboard />
-                  Dashboard
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogout}
@@ -106,10 +102,38 @@ export function NavbarApp() {
       <MobileNav>
         <MobileNavHeader>
           <NavbarLogo />
-          <MobileNavToggle
-            isOpen={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          />
+          <div className='flex gap-2 items-center'>
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+            {data && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className='cursor-pointer'>
+                  <Avatar>
+                    <AvatarFallback className='bg-green-100'>DW</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end'>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuItem asChild className='cursor-pointer'>
+                    <Link href={"/account"}>
+                      <CircleUser />
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className='cursor-pointer text-red-500 hover:bg-red-50 hover:text-red-600'
+                  >
+                    <LogOut className='text-red-500' />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </MobileNavHeader>
 
         <MobileNavMenu

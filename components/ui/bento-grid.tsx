@@ -8,8 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { Ellipsis, Eraser, SquarePen } from "lucide-react";
-import { Button } from "./button";
 import { useUser } from "@/hooks/useUser";
+import { DeleteProjectDialog } from "@/app/(main)/projects/delete-dialog";
+import { useState } from "react";
 
 export const BentoGrid = ({
   className,
@@ -31,43 +32,56 @@ export const BentoGrid = ({
 };
 
 export const BentoGridItem = ({
+  id,
   className,
   title,
   link,
   description,
   header,
   icon,
+  slug,
 }: {
+  id: string;
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   link: string;
   header?: React.ReactNode;
   icon?: React.ReactNode;
+  slug: string;
 }) => {
   const { data } = useUser();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
   return (
     <Link className='cursor-pointer relative' href={link}>
       {data && (
-        <DropdownMenu>
-          <DropdownMenuTrigger className='absolute top-2 right-2 z-20 p-1 bg-black/40 text-white dark:bg-white/40 dark:text-black rounded-lg cursor-pointer shadow'>
-            <Ellipsis />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Setting</DropdownMenuLabel>
-            <DropdownMenuItem asChild className='cursor-pointer'>
-              <Link href={""}>
-                <SquarePen />
-                Edit
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className='cursor-pointer'>
-              <Link href={""}>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger className='absolute top-2 right-2 z-20 p-1 bg-black/40 text-white dark:bg-white/40 dark:text-black rounded-lg cursor-pointer shadow'>
+              <Ellipsis />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Setting</DropdownMenuLabel>
+              <DropdownMenuItem asChild className='cursor-pointer'>
+                <Link href={`/projects/${slug}/edit`}>
+                  <SquarePen />
+                  Edit
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className='cursor-pointer'
+                onClick={() => setDeleteDialogOpen(id)}
+              >
                 <Eraser /> Delete
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DeleteProjectDialog
+            documentId={id}
+            open={deleteDialogOpen === id}
+            onOpenChange={(open) => setDeleteDialogOpen(open ? id : null)}
+          />
+        </>
       )}
       <div
         className={cn(

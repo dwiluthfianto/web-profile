@@ -1,6 +1,18 @@
 import { useListBlog } from "@/hooks/useBlog";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Ellipsis, Eraser, SquarePen } from "lucide-react";
+import { useState } from "react";
+import { DeleteBlogDialog } from "@/app/(main)/blogs/delete-dialog";
 
 export function BlogSection() {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
   const { data, isPending } = useListBlog();
 
   return (
@@ -34,7 +46,7 @@ export function BlogSection() {
                       })
                     : "Unknown Date"}
                 </p>
-                <a
+                <Link
                   className='cursor-pointer inline-block mb-2'
                   href={`/blogs/${item.slug ?? item.$id}`}
                 >
@@ -43,11 +55,42 @@ export function BlogSection() {
                       {item.title}
                     </span>
                   </h3>
-                </a>
+                </Link>
                 <p className='text-sm mb-5 text-slate-950/70 dark:text-slate-400 line-clamp-2'>
                   {item.description}
                 </p>
               </div>
+              {data && (
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className='w-8 h-8 p-1 bg-black/40 text-white dark:bg-white/40 dark:text-black rounded-lg cursor-pointer shadow ml-2'>
+                      <Ellipsis />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>Setting</DropdownMenuLabel>
+                      <DropdownMenuItem asChild className='cursor-pointer'>
+                        <Link href={`/blogs/${item.slug}/edit`}>
+                          <SquarePen />
+                          Edit
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className='cursor-pointer'
+                        onClick={() => setDeleteDialogOpen(item.$id)}
+                      >
+                        <Eraser /> Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <DeleteBlogDialog
+                    documentId={item.$id}
+                    open={deleteDialogOpen === item.$id}
+                    onOpenChange={(open) =>
+                      setDeleteDialogOpen(open ? item.$id : null)
+                    }
+                  />
+                </>
+              )}
             </div>
           ))}
         </>

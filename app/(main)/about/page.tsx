@@ -45,7 +45,7 @@ export default function AboutPage() {
                 src={file}
                 alt='profile image'
                 fill
-                className='h-full w-full rounded-lg object-cover dark:brightness-[0.2] dark:grayscale'
+                className='h-full w-full rounded-lg object-cover '
               />
             </AspectRatio>
           </div>

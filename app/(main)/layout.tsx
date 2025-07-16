@@ -7,10 +7,10 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className='max-w-3xl mx-auto '>
+    <div className='max-w-3xl mx-auto'>
       <NavbarApp />
       {children}
       <FooterSection />
-    </section>
+    </div>
   );
 }

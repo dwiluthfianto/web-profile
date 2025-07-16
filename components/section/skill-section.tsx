@@ -1,14 +1,38 @@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUser } from "@/hooks/useUser";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { Plus, SquarePen } from "lucide-react";
+import { useState } from "react";
 
 export function SkillSection() {
+  const { data: user } = useUser();
+  const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
   return (
     <section className='space-y-8 grid grid-cols-1 md:grid-cols-3 gap-4'>
-      <div className='md:cols-span-1'>
+      <div className='md:cols-span-1 space-y-4'>
         <h1 className='text-4xl font-bold'>
           <span className='text-muted-foreground'>/</span>skills
           <span className='text-muted-foreground'>.</span>
         </h1>
+        {user && (
+          <>
+            <div className='flex gap-2 item-center'>
+              <Button variant={"outline"} asChild>
+                <Link href={"/account/skills"}>
+                  <SquarePen />
+                </Link>
+              </Button>
+              <Button
+                variant={"outline"}
+                onClick={() => setAddDialogOpen(true)}
+              >
+                <Plus />
+              </Button>
+            </div>
+          </>
+        )}
       </div>
       <div className='md:col-span-2'>
         <div className='flex flex-wrap gap-3'>

@@ -32,6 +32,8 @@ export function ProjectSection() {
               description={item.description}
               header={<HeaderImage fileId={item.image} />}
               link={item.link}
+              slug={item.slug}
+              id={item.$id}
             />
           ))}
       </BentoGrid>
@@ -49,7 +51,7 @@ export const HeaderImage = ({ fileId }: { fileId: string }) => {
           src={data}
           alt='Project Image'
           fill
-          className='h-full w-full rounded-xl object-cover dark:brightness-[0.2] dark:grayscale'
+          className='h-full w-full rounded-xl object-cover'
         />
       )}
     </AspectRatio>

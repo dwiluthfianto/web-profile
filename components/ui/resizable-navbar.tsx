@@ -8,10 +8,11 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 
-import logo from "../../public/logo.png";
-
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import { useUserProfile } from "@/hooks/useUser";
+import { useFileView } from "@/hooks/useStorage";
+import { Skeleton } from "./skeleton";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -233,14 +234,21 @@ export const MobileNavToggle = ({
 };
 
 export const NavbarLogo = () => {
+  const { data: user, isPending: pendingUser } = useUserProfile();
+  const { data: logo, isPending: pendingLogo } = useFileView(user?.logo);
+
+  if (pendingUser || pendingLogo) {
+    return <Skeleton className='h-9 w-24' />;
+  }
+
   return (
     <Link
       href='/'
       className='relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black'
     >
-      <img src={logo.src} alt='logo' width={30} height={30} />
+      <img src={logo} alt='logo' width={30} height={30} />
       <span className='font-medium text-black dark:text-white'>
-        Dwi Luthfianto
+        {user && user.name}
       </span>
     </Link>
   );

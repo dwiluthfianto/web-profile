@@ -1,0 +1,434 @@
+{
+    "projectId": "68690490002af927d252",
+    "endpoint": "https://nyc.cloud.appwrite.io/v1",
+    "projectName": "Dwi Project",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "sites": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "databases": [
+        {
+            "$id": "68690e58002c79ad79d5",
+            "name": "portfolio_dwi",
+            "enabled": true
+        }
+    ],
+    "collections": [
+        {
+            "$id": "68690e670000d377360b",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "blogs",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 200,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 1073741824,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "slug",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 200,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "68690e73002da1f5727c",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "projects",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 150,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "link",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "image",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 20,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "slug",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 200,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "68690f7b003844150389",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "profile",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "subheadline",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 150,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "about",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 500,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "todo",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "image",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 20,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "logo",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 20,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "686a28a60017e0697610",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "experiences",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "startDate",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "endDate",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "company",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "employmentType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "Full-time",
+                        "Part-time",
+                        "Freelance",
+                        "Internship",
+                        "Contract"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 500,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "686a28cd000b51472d91",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "skills",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "image",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 30,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "686b6c18001f098ebc62",
+            "$permissions": [
+                "create(\"guests\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")",
+                "create(\"users\")"
+            ],
+            "databaseId": "68690e58002c79ad79d5",
+            "name": "messages",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "businessEmail",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "format": "email",
+                    "default": null
+                },
+                {
+                    "key": "phoneNumber",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 20,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "companyName",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 50,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "subject",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "message",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 2000,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        }
+    ],
+    "buckets": [
+        {
+            "$id": "6869da19001f228e5474",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"user:68690a8a002a64f298fc\")",
+                "read(\"user:68690a8a002a64f298fc\")",
+                "update(\"user:68690a8a002a64f298fc\")",
+                "delete(\"user:68690a8a002a64f298fc\")"
+            ],
+            "fileSecurity": false,
+            "name": "portfolio_bucket",
+            "enabled": true,
+            "maximumFileSize": 10000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        }
+    ]
+}
