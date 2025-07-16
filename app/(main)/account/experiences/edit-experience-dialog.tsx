@@ -102,8 +102,7 @@ export default function EditExperienceDialog({
         <DialogHeader>
           <DialogTitle>Edit Experience</DialogTitle>
           <DialogDescription>
-            Fill in the details of your experience. Click save when you&apos;re
-            done.
+            Fill in the details of your experience. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

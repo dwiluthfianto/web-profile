@@ -1,28 +1,27 @@
-"use client"
+"use client";
 
-import { TableIcon } from "lucide-react"
-
-import { useToolbarContext } from "/editor/context/toolbar-context"
-import { InsertTableDialog } from "/editor/plugins/table-plugin"
-import { SelectItem } from "/ui/select"
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { SelectItem } from "@/components/ui/select";
+import { TableIcon } from "lucide-react";
+import { InsertTableDialog } from "../../table-plugin";
 
 export function InsertTable() {
-  const { activeEditor, showModal } = useToolbarContext()
+  const { activeEditor, showModal } = useToolbarContext();
 
   return (
     <SelectItem
-      value="table"
+      value='table'
       onPointerUp={() =>
         showModal("Insert Table", (onClose) => (
           <InsertTableDialog activeEditor={activeEditor} onClose={onClose} />
         ))
       }
-      className=""
+      className=''
     >
-      <div className="flex items-center gap-1">
-        <TableIcon className="size-4" />
+      <div className='flex items-center gap-1'>
+        <TableIcon className='size-4' />
         <span>Table</span>
       </div>
     </SelectItem>
-  )
+  );
 }

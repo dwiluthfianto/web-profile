@@ -1,4 +1,4 @@
-import { account, databases, storage } from "@/app/appwrite";
+import { account, databases } from "@/app/appwrite";
 import { Query } from "appwrite";
 import z from "zod";
 

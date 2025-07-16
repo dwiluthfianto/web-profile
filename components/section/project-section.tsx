@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { useListProject } from "@/hooks/useProject";
 import { useFileView } from "@/hooks/useStorage";
+import { HeaderImage } from "../image/header-image";
 
 export function ProjectSection() {
   const { data, isPending } = useListProject(2);
@@ -30,7 +31,7 @@ export function ProjectSection() {
               key={i}
               title={item.title}
               description={item.description}
-              header={<HeaderImage fileId={item.image} />}
+              header={<HeaderImage ratio={16 / 9} fileId={item.image} />}
               link={item.link}
               slug={item.slug}
               id={item.$id}
@@ -40,20 +41,3 @@ export function ProjectSection() {
     </div>
   );
 }
-
-export const HeaderImage = ({ fileId }: { fileId: string }) => {
-  const { data, isPending } = useFileView(fileId);
-
-  return (
-    <AspectRatio ratio={16 / 9} className='bg-muted rounded-xl'>
-      {!isPending && data && (
-        <Image
-          src={data}
-          alt='Project Image'
-          fill
-          className='h-full w-full rounded-xl object-cover'
-        />
-      )}
-    </AspectRatio>
-  );
-};

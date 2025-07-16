@@ -66,8 +66,7 @@ export default function AddSkillDialog({
         <DialogHeader>
           <DialogTitle>Add Skill</DialogTitle>
           <DialogDescription>
-            Fill in the details of your new skill. Click save when you&apos;re
-            done.
+            Fill in the details of your new skill. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

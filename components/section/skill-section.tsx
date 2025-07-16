@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useListSkill } from "@/hooks/useSkill";
 import { useFileView } from "@/hooks/useStorage";
 import AddSkillDialog from "@/app/(main)/account/skills/add-skill-dialog";
+import { HeaderImage } from "../image/header-image";
 
 export function SkillSection() {
   const { data: user } = useUser();
@@ -54,7 +55,7 @@ export function SkillSection() {
                   className='rounded-lg py-1 px-3 text-base'
                   key={i}
                 >
-                  <HeaderImage fileId={item.image} />
+                  <HeaderImage className='rounded-full' fileId={item.image} />
                   {item.title}
                 </Badge>
               ))}
@@ -64,17 +65,3 @@ export function SkillSection() {
     </section>
   );
 }
-
-export const HeaderImage = ({ fileId }: { fileId: string }) => {
-  const { data, isPending } = useFileView(fileId);
-
-  return (
-    <Avatar className='w-6 h-6'>
-      {data && !isPending ? (
-        <AvatarImage src={data} alt='skill-image' />
-      ) : (
-        <AvatarFallback>SK</AvatarFallback>
-      )}
-    </Avatar>
-  );
-};

@@ -22,13 +22,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoginSchema } from "@/lib/services/user.service";
 import { useUserMutations, useUserProfile } from "@/hooks/useUser";
-import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { useFileView } from "@/hooks/useStorage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-export function LoginPage() {
+export default function LoginPage() {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -60,7 +60,7 @@ export function LoginPage() {
             href='/'
             className='flex items-center gap-2 self-center font-medium'
           >
-            <img src={logo} alt='logo' width={30} height={30} />
+            <Image src={logo || ""} alt='logo' width={30} height={30} />
             <span className='font-medium text-black dark:text-white'>
               {user && user.name}
             </span>
@@ -136,5 +136,3 @@ export function LoginPage() {
     </div>
   );
 }
-
-export default LoginPage;

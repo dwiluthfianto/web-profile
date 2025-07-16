@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useProjectMutations } from "@/hooks/useProject";
-import { useFileMutations, useFileView } from "@/hooks/useStorage";
+import { useFileMutations } from "@/hooks/useStorage";
 import { ProjectSchema } from "@/lib/services/project.service";
 import { generateSlug } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";

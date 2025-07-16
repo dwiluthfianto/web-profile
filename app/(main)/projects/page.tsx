@@ -1,6 +1,6 @@
 "use client";
 
-import { HeaderImage } from "@/components/section/project-section";
+import { HeaderImage } from "@/components/image/header-image";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
 import { useListProject } from "@/hooks/useProject";
@@ -43,7 +43,7 @@ export default function ProjectsPage() {
               key={i}
               title={item.title}
               description={item.description}
-              header={<HeaderImage fileId={item.image} />}
+              header={<HeaderImage ratio={16 / 9} fileId={item.image} />}
               link={item.link}
               slug={item.slug}
               id={item.$id}

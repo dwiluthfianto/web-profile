@@ -51,11 +51,11 @@ export default function EditProjectPage() {
       data.image = (await createFileMutation.mutateAsync(data.imageFile)).$id;
     }
 
-    project &&
-      (await updateProjectMutation.mutateAsync({
+    if (project)
+      await updateProjectMutation.mutateAsync({
         documentId: project.$id,
         data,
-      }));
+      });
 
     router.push("/projects");
   };

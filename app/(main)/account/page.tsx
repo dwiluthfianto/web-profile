@@ -59,11 +59,12 @@ export default function ProfilePage() {
       data.logo = (await createFileMutation.mutateAsync(data.logoFile)).$id;
     }
 
-    profile &&
-      (await updateUserProfileMutation.mutateAsync({
-        documentId: profile?.$id,
+    if (profile) {
+      await updateUserProfileMutation.mutateAsync({
+        documentId: profile.$id,
         data,
-      }));
+      });
+    }
   };
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { ID, storage } from "@/app/appwrite";
-import { Permission, Role } from "appwrite";
 
 export const getFileView = async (fileId: string) => {
   return storage.getFileView(

@@ -10,7 +10,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { CircleUser, LayoutDashboard, LogOut, MoveUpRight } from "lucide-react";
+import { CircleUser, LogOut, MoveUpRight } from "lucide-react";
 import { useState } from "react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useUser, useUserMutations } from "@/hooks/useUser";

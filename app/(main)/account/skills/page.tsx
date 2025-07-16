@@ -12,6 +12,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import AddSkillDialog from "./add-skill-dialog";
 import EditSkillDialog from "./edit-skill-dialog";
+import { HeaderImage } from "@/components/image/header-image";
 
 export default function SkillPage() {
   const router = useRouter();
@@ -89,20 +90,3 @@ export default function SkillPage() {
     </div>
   );
 }
-
-export const HeaderImage = ({ fileId }: { fileId: string }) => {
-  const { data, isPending } = useFileView(fileId);
-
-  return (
-    <AspectRatio ratio={1 / 1} className='bg-muted rounded-full'>
-      {!isPending && data && (
-        <Image
-          src={data}
-          alt='Project Image'
-          fill
-          className='h-full w-full rounded-xl object-cover'
-        />
-      )}
-    </AspectRatio>
-  );
-};

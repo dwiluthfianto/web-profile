@@ -9,7 +9,7 @@ export const SkillSchema = z.object({
 });
 
 export const getListSkill = async () => {
-  let res = await databases.listDocuments(
+  const res = await databases.listDocuments(
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
     process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
     [Query.orderDesc("$createdAt")]
@@ -19,7 +19,7 @@ export const getListSkill = async () => {
 };
 
 export const getSkillDetail = async (documentId: string) => {
-  let res = await databases.getDocument(
+  const res = await databases.getDocument(
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
     process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
     documentId

@@ -1,5 +1,4 @@
 import { databases } from "@/app/appwrite";
-import { generateSlug } from "@/utils/slugify";
 import { ID, Query } from "appwrite";
 import z from "zod";
 
@@ -17,20 +16,13 @@ export const BlogSchema = z.object({
 });
 
 export const getListBlog = async () => {
-  let res = await databases
-    .listDocuments(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-      process.env.NEXT_PUBLIC_APPWRITE_BLOG_COLLECTION_ID!,
-      [Query.orderDesc("$createdAt")]
-    )
-    .then(function (response) {
-      return response.documents;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  const res = await databases.listDocuments(
+    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+    process.env.NEXT_PUBLIC_APPWRITE_BLOG_COLLECTION_ID!,
+    [Query.orderDesc("$createdAt")]
+  );
 
-  return res;
+  return res.documents;
 };
 
 export const createBlog = async (data: z.infer<typeof BlogSchema>) => {

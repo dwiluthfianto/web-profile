@@ -66,8 +66,8 @@ export default function UpdateBlogPage() {
 
   const { updateBlogMutation } = useBlogMutations();
   const onSubmit = async (data: z.infer<typeof BlogSchema>) => {
-    blog &&
-      (await updateBlogMutation.mutateAsync({ documentId: blog?.$id, data }));
+    if (blog)
+      await updateBlogMutation.mutateAsync({ documentId: blog.$id, data });
 
     router.push("/blogs");
   };

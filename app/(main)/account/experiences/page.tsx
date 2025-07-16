@@ -47,7 +47,7 @@ export default function ExperiencePage() {
       </div>
       <div>
         {data?.map((item, i) => (
-          <div key={item.$id}>
+          <div key={i}>
             <div className='flex justify-between'>
               <div>
                 <p className='text-sm mb-1 text-slate-950/70 group-hover:text-slate-950/90 dark:text-white/90 dark:group-hover:text-slate-300 font-medium'>

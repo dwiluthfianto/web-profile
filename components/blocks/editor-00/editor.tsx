@@ -13,7 +13,6 @@ import {
 import { editorTheme } from "@/components/editor/themes/editor-theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-import { nodes } from "./nodes";
 import { Plugins } from "./plugins";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
