@@ -12,7 +12,7 @@ export function FooterSection() {
           <h1 className='text-4xl font-semibold'>
             Let's Discuss Your Vision. <br /> With Me
           </h1>
-          <Button>
+          <Button asChild>
             <Link href={"/contact"}>
               Let's talk <MoveUpRight width={16} />
             </Link>
