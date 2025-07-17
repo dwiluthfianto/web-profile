@@ -1,6 +1,7 @@
 import { MoveUpRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import Link from "next/link";
 
 export function FooterSection() {
   return (
@@ -12,7 +13,9 @@ export function FooterSection() {
             Let's Discuss Your Vision. <br /> With Me
           </h1>
           <Button>
-            Let's talk <MoveUpRight width={16} />
+            <Link href={"/contact"}>
+              Let's talk <MoveUpRight width={16} />
+            </Link>
           </Button>
         </div>
 
@@ -71,12 +74,9 @@ export function FooterSection() {
         </div>
       </div>
       <Separator />
-      <div className='flex items-center justify-between p-4'>
-        <span className='text-sm text-neutral-500 dark:text-neutral-400'>
+      <div className='flex items-center p-4'>
+        <span className='text-sm text-center text-neutral-500 dark:text-neutral-400'>
           © {new Date().getFullYear()} Dwi Luthfianto. All rights reserved.
-        </span>
-        <span className='text-sm text-neutral-500 dark:text-neutral-400'>
-          Made with ❤️ in Indonesia
         </span>
       </div>
     </div>

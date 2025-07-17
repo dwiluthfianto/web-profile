@@ -10,9 +10,11 @@ import {
 import { Ellipsis, Eraser, SquarePen } from "lucide-react";
 import { useState } from "react";
 import { DeleteBlogDialog } from "@/app/(main)/blogs/delete-dialog";
+import { useUser } from "@/hooks/useUser";
 
 export function BlogSection() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
+  const { data: user } = useUser();
   const { data, isPending } = useListBlog();
 
   return (
@@ -60,7 +62,7 @@ export function BlogSection() {
                   {item.description}
                 </p>
               </div>
-              {data && (
+              {user && (
                 <>
                   <DropdownMenu>
                     <DropdownMenuTrigger className='w-8 h-8 p-1 bg-black/40 text-white dark:bg-white/40 dark:text-black rounded-lg cursor-pointer shadow ml-2'>
