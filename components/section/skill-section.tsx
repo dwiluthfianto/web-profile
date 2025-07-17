@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useListSkill } from "@/hooks/useSkill";
 import { useFileView } from "@/hooks/useStorage";
 import AddSkillDialog from "@/app/(main)/account/skills/add-skill-dialog";
-import { HeaderImage } from "../image/header-image";
+import { HeaderAvatarImage, HeaderImage } from "../image/header-image";
 
 export function SkillSection() {
   const { data: user } = useUser();
@@ -55,7 +55,10 @@ export function SkillSection() {
                   className='rounded-lg py-1 px-3 text-base'
                   key={i}
                 >
-                  <HeaderImage className='rounded-full' fileId={item.image} />
+                  <HeaderAvatarImage
+                    className='rounded-full'
+                    fileId={item.image}
+                  />
                   {item.title}
                 </Badge>
               ))}

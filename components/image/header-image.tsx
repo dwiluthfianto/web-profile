@@ -2,6 +2,7 @@ import { useFileView } from "@/hooks/useStorage";
 import { AspectRatio } from "../ui/aspect-ratio";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface HeaderImageProps {
   fileId: string;
@@ -30,5 +31,27 @@ export const HeaderImage = ({
         />
       )}
     </AspectRatio>
+  );
+};
+
+interface HeaderAvatarImageProps {
+  fileId: string;
+  className?: string;
+}
+
+export const HeaderAvatarImage = ({
+  fileId,
+  className,
+}: HeaderAvatarImageProps) => {
+  const { data, isPending } = useFileView(fileId);
+
+  return (
+    <Avatar className={cn("w-6 h-6", className)}>
+      {data && !isPending ? (
+        <AvatarImage src={data} alt='skill-image' />
+      ) : (
+        <AvatarFallback>SK</AvatarFallback>
+      )}
+    </Avatar>
   );
 };
