@@ -155,6 +155,7 @@ export function NavbarApp() {
               onClick={() => setIsMobileMenuOpen(false)}
               variant='primary'
               className='w-full'
+              href='contact'
             >
               Let's talk
             </NavbarButton>
