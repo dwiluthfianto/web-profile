@@ -5,6 +5,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { useFileView } from "@/hooks/useStorage";
 import { useUserProfile } from "@/hooks/useUser";
+import { Skeleton } from "@/components/ui/skeleton";
 import { FileText } from "lucide-react";
 import Image from "next/image";
 
@@ -23,8 +24,29 @@ export default function AboutPage() {
           Who I am, what I do, and why it matters.
         </p>
       </div>
-      {!isPending && !filePending && data! && file! && (
+
+      {isPending || filePending ? (
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+          <div className='md:col-span-2 space-y-4'>
+            <div className='space-y-2'>
+              <Skeleton className='h-10 w-2/3' />
+              <div className='space-y-2 pt-2'>
+                <Skeleton className='h-4 w-full' />
+                <Skeleton className='h-4 w-full' />
+                <Skeleton className='h-4 w-5/6' />
+                <Skeleton className='h-4 w-4/5' />
+              </div>
+            </div>
+            <Skeleton className='h-10 w-32 mt-4' />
+          </div>
+          <div className='md:col-span-1'>
+            <AspectRatio ratio={1 / 1} className='bg-muted rounded-lg'>
+              <Skeleton className='h-full w-full rounded-lg' />
+            </AspectRatio>
+          </div>
+        </div>
+      ) : data && file ? (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in'>
           <div className='md:col-span-2'>
             <div className='space-y-2'>
               <h2 className='text-4xl font-bold'>Hi, I'm {data.name}</h2>
@@ -50,7 +72,8 @@ export default function AboutPage() {
             </AspectRatio>
           </div>
         </div>
-      )}
+      ) : null}
+
       <ExperienceSection />
       <SkillSection />
     </div>

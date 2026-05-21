@@ -45,6 +45,7 @@ export const getUsersProfile = async () => {
     })
     .catch(function (error) {
       console.error(error);
+      throw error;
     });
 };
 
@@ -66,6 +67,7 @@ export const getUserProfile = async () => {
     })
     .catch(function (error) {
       console.error(error);
+      throw error;
     });
 
   return res;

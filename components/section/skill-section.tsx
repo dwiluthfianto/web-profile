@@ -9,6 +9,7 @@ import { useListSkill } from "@/hooks/useSkill";
 import { useFileView } from "@/hooks/useStorage";
 import AddSkillDialog from "@/app/(main)/account/skills/add-skill-dialog";
 import { HeaderAvatarImage, HeaderImage } from "../image/header-image";
+import { Skeleton } from "../ui/skeleton";
 
 export function SkillSection() {
   const { data: user } = useUser();
@@ -44,10 +45,16 @@ export function SkillSection() {
         )}
       </div>
       <div className='md:col-span-2'>
-        {isPending ? null : skill?.length === 0 ? (
+        {isPending ? (
+          <div className='flex flex-wrap gap-3'>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <Skeleton key={i} className='h-8 w-24 rounded-lg' />
+            ))}
+          </div>
+        ) : skill?.length === 0 ? (
           <h1 className='text-center'>Skill not found</h1>
         ) : (
-          <div className='flex flex-wrap gap-3'>
+          <div className='flex flex-wrap gap-3 animate-fade-in'>
             {skill &&
               skill.map((item, i) => (
                 <Badge

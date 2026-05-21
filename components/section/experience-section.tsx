@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Plus, SquarePen } from "lucide-react";
 import { useState } from "react";
 import AddExperienceDialog from "@/app/(main)/account/experiences/add-experience-dialog";
+import { Skeleton } from "../ui/skeleton";
 
 export function ExperienceSection() {
   const { data: user } = useUser();
@@ -41,10 +42,27 @@ export function ExperienceSection() {
         )}
       </div>
       <div className='md:col-span-2'>
-        {isPending ? null : data?.length === 0 ? (
+        {isPending ? (
+          <div className='space-y-6'>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className='flex gap-4'>
+                <div className='flex flex-col items-center'>
+                  <Skeleton className='w-3 h-3 rounded-full mt-2' />
+                  <div className='w-[2px] bg-slate-950/10 dark:bg-white/10 flex-1 mt-2 min-h-[80px]' />
+                </div>
+                <div className='space-y-2 flex-1 pb-6'>
+                  <Skeleton className='h-4 w-24' />
+                  <Skeleton className='h-6 w-48' />
+                  <Skeleton className='h-4 w-32' />
+                  <Skeleton className='h-12 w-full' />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : data?.length === 0 ? (
           <h1 className='text-center'>Experiences not found</h1>
         ) : (
-          <>
+          <div className='animate-fade-in'>
             <div className='ml-[3px] -mb-[15px] h-8 w-[3px] bg-slate-950/10 dark:bg-white/10 rounded-t'></div>
             {data &&
               data.map((item, i) => (
@@ -93,7 +111,7 @@ export function ExperienceSection() {
                   </div>
                 </div>
               ))}
-          </>
+          </div>
         )}
       </div>
     </section>
