@@ -75,7 +75,7 @@ export function FooterSection() {
       </div>
       <Separator />
       <div className='flex items-center p-4'>
-        <span className='text-sm text-center text-neutral-500 dark:text-neutral-400'>
+        <span className='text-sm text-center text-neutral-500 dark:text-neutral-400' suppressHydrationWarning>
           © {new Date().getFullYear()} Dwi Luthfianto. All rights reserved.
         </span>
       </div>

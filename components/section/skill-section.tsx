@@ -18,7 +18,7 @@ export function SkillSection() {
   return (
     <section className='space-y-8 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <div className='md:cols-span-1 space-y-4'>
-        <h1 className='text-4xl font-bold'>
+        <h1 className='text-3xl font-mono font-bold'>
           <span className='text-muted-foreground'>/</span>skills
           <span className='text-muted-foreground'>.</span>
         </h1>

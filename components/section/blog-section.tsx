@@ -56,7 +56,7 @@ export function BlogSection() {
                 <div className='ml-[3px] w-[3px] bg-slate-950/10 dark:bg-white/10 h-full'></div>
               </div>
               <div className='pl-3 group'>
-                <p className='text-sm mb-1 text-slate-950/70 group-hover:text-slate-950/90 dark:text-white/90 dark:group-hover:text-slate-300 font-medium'>
+                <p className='font-sans text-[11px] uppercase tracking-wider mb-1 text-slate-950/70 group-hover:text-slate-950/90 dark:text-white/90 dark:group-hover:text-slate-300' suppressHydrationWarning>
                   {item.$createdAt
                     ? new Date(item.$createdAt).toLocaleDateString("en-US", {
                         year: "numeric",

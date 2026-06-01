@@ -123,7 +123,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-xs font-sans uppercase tracking-widest text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
         className
       )}
     >
@@ -131,7 +131,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <Link
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className='relative px-4 py-2 text-neutral-600 dark:text-neutral-300'
+          className='relative px-3 py-1.5 text-neutral-600 dark:text-neutral-300'
           key={`link-${idx}`}
           href={item.link}
         >
@@ -244,10 +244,10 @@ export const NavbarLogo = () => {
   return (
     <Link
       href='/'
-      className='relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black'
+      className='relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-xs font-sans uppercase tracking-widest text-black dark:text-white'
     >
       <img src={logo} alt='logo' width={30} height={30} />
-      <span className='font-medium text-black dark:text-white'>
+      <span className='font-bold'>
         {user && user.name}
       </span>
     </Link>
@@ -272,7 +272,7 @@ export const NavbarButton = ({
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 rounded-md bg-white button bg-white text-black text-xs font-sans uppercase tracking-widest relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
   const variantStyles = {
     primary:

@@ -44,13 +44,26 @@ export default function ContactPage() {
   const onSubmit = async (data: z.infer<typeof ContactSchema>) => {
     await createMessageMutation.mutateAsync(data);
 
+    // Trigger SMTP email notification via Next.js api route handler
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (e) {
+      console.error("Failed to send email notification:", e);
+    }
+
     form.reset();
   };
 
   return (
     <div className='p-4 space-y-8'>
       <div className='flex item-center justify-between'>
-        <h1 className='text-4xl font-semibold flex items-center gap-2'>
+        <h1 className='text-3xl font-mono font-semibold flex items-center gap-2'>
           Let's talk <MoveUpRight width={24} />
         </h1>
 

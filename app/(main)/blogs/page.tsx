@@ -11,7 +11,7 @@ export default function BlogsPage() {
     <div className='p-4 space-y-8'>
       <div>
         <div>
-          <h1 className='text-4xl font-bold text-center'>
+          <h1 className='text-3xl font-mono font-bold text-center'>
             <span className='text-muted-foreground'>/</span>blogs
             <span className='text-muted-foreground'>.</span>
           </h1>

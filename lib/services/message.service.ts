@@ -1,4 +1,5 @@
 import { databases, ID } from "@/app/appwrite";
+import { Query } from "appwrite";
 import z from "zod";
 
 export const ContactSchema = z.object({
@@ -22,4 +23,14 @@ export const createMessage = async (data: z.infer<typeof ContactSchema>) => {
     ID.unique(),
     data
   );
+};
+
+export const getListMessage = async () => {
+  const res = await databases.listDocuments(
+    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+    process.env.NEXT_PUBLIC_APPWRITE_MESSAGE_COLLECTION_ID!,
+    [Query.orderDesc("$createdAt")]
+  );
+
+  return res.documents;
 };

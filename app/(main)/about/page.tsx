@@ -16,7 +16,7 @@ export default function AboutPage() {
   return (
     <div className='p-4 space-y-8'>
       <div>
-        <h1 className='text-4xl font-bold text-center'>
+        <h1 className='text-3xl font-mono font-bold text-center'>
           <span className='text-muted-foreground'>/</span>about
           <span className='text-muted-foreground'>.</span>
         </h1>

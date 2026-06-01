@@ -15,7 +15,7 @@ export function ExperienceSection() {
   return (
     <section className='space-y-8 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <div className='md:col-span-1 space-y-4'>
-        <h1 className='text-4xl font-bold'>
+        <h1 className='text-3xl font-mono font-bold'>
           <span className='text-muted-foreground'>/</span>experiences
           <span className='text-muted-foreground'>.</span>
         </h1>
@@ -78,7 +78,7 @@ export function ExperienceSection() {
                     <div className='ml-[3px] w-[3px] bg-slate-950/10 dark:bg-white/10 h-full'></div>
                   </div>
                   <div className='pl-3 group'>
-                    <p className='text-sm mb-1 text-slate-950/70 group-hover:text-slate-950/90 dark:text-white/90 dark:group-hover:text-slate-300 font-medium'>
+                    <p className='font-sans text-[11px] uppercase tracking-wider mb-1 text-slate-950/70 group-hover:text-slate-950/90 dark:text-white/90 dark:group-hover:text-slate-300' suppressHydrationWarning>
                       {item.startDate
                         ? new Date(item.startDate).toLocaleDateString("en-US", {
                             year: "numeric",

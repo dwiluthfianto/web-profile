@@ -8,7 +8,7 @@ export function ProjectSection() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-4xl font-bold">
+      <h1 className="text-3xl font-mono font-bold">
         <span className="text-muted-foreground">/</span>projects
         <span className="text-muted-foreground">.</span>
       </h1>
