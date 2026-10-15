@@ -35,22 +35,24 @@ export const HeaderImage = ({
 };
 
 interface HeaderAvatarImageProps {
-  fileId: string;
+  fileId?: string;
   className?: string;
+  fallbackText?: string;
 }
 
 export const HeaderAvatarImage = ({
   fileId,
   className,
+  fallbackText = "SK",
 }: HeaderAvatarImageProps) => {
-  const { data, isPending } = useFileView(fileId);
+  const { data, isPending } = useFileView(fileId ?? "");
 
   return (
     <Avatar className={cn("w-6 h-6", className)}>
       {data && !isPending ? (
         <AvatarImage src={data} alt='skill-image' />
       ) : (
-        <AvatarFallback>SK</AvatarFallback>
+        <AvatarFallback className='text-[10px] font-semibold'>{fallbackText}</AvatarFallback>
       )}
     </Avatar>
   );
