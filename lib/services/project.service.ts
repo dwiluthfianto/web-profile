@@ -1,5 +1,10 @@
-import { databases } from "@/app/appwrite";
-import { ID, Query } from "appwrite";
+import {
+  createProjectAction,
+  deleteProjectAction,
+  getProjectDetailAction,
+  listProjectsAction,
+  updateProjectAction,
+} from "@/lib/neon.actions";
 import z from "zod";
 
 export const ProjectSchema = z.object({
@@ -15,23 +20,12 @@ export const ProjectSchema = z.object({
 });
 
 export const getListProject = async (limit: number) => {
-  const res = await databases.listDocuments(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECT_COLLECTION_ID!,
-    [Query.limit(limit), Query.orderDesc("$createdAt")]
-  );
-
-  return res.documents;
+  return await listProjectsAction(limit);
 };
 
 export const createProject = async (data: z.infer<typeof ProjectSchema>) => {
   const { imageFile, ...payload } = data;
-  await databases.createDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECT_COLLECTION_ID!,
-    ID.unique(),
-    payload
-  );
+  await createProjectAction(payload);
 };
 
 export const updateProject = async (
@@ -39,28 +33,13 @@ export const updateProject = async (
   data: z.infer<typeof ProjectSchema>
 ) => {
   const { imageFile, ...payload } = data;
-  await databases.updateDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECT_COLLECTION_ID!,
-    documentId,
-    payload
-  );
+  await updateProjectAction(documentId, payload);
 };
 
 export const deleteProject = async (documentId: string) => {
-  await databases.deleteDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECT_COLLECTION_ID!,
-    documentId
-  );
+  await deleteProjectAction(documentId);
 };
 
 export const getProjectDetail = async (slug: string) => {
-  const res = await databases.listDocuments(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECT_COLLECTION_ID!,
-    [Query.equal("slug", [slug])]
-  );
-
-  return res.documents[0];
+  return await getProjectDetailAction(slug);
 };

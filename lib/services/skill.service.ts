@@ -1,5 +1,10 @@
-import { databases } from "@/app/appwrite";
-import { ID, Query } from "appwrite";
+import {
+  createSkillAction,
+  deleteSkillAction,
+  getSkillDetailAction,
+  listSkillsAction,
+  updateSkillAction,
+} from "@/lib/neon.actions";
 import z from "zod";
 
 export const SkillSchema = z.object({
@@ -9,50 +14,26 @@ export const SkillSchema = z.object({
 });
 
 export const getListSkill = async () => {
-  const res = await databases.listDocuments(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
-    [Query.orderDesc("$createdAt")]
-  );
-
-  return res.documents;
+  return await listSkillsAction();
 };
 
 export const getSkillDetail = async (documentId: string) => {
-  const res = await databases.getDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
-    documentId
-  );
-
-  return res;
+  return await getSkillDetailAction(documentId);
 };
 
 export const createSkill = async (data: z.infer<typeof SkillSchema>) => {
   const { imageFile, ...payload } = data;
-  return await databases.createDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
-    ID.unique(),
-    payload
-  );
+  return await createSkillAction(payload);
 };
+
 export const updateSkill = async (
   documentId: string,
   data: z.infer<typeof SkillSchema>
 ) => {
   const { imageFile, ...payload } = data;
-  return await databases.updateDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
-    documentId,
-    payload
-  );
+  return await updateSkillAction(documentId, payload);
 };
+
 export const deleteSkill = async (documentId: string) => {
-  return await databases.deleteDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_SKILL_COLLECTION_ID!,
-    documentId
-  );
+  return await deleteSkillAction(documentId);
 };

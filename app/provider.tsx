@@ -15,16 +15,11 @@ export default function Providers({
       new QueryClient({
         defaultOptions: {
           queries: {
-            retry: 1, // Only retry once to speed up error boundary redirection (instead of default 3 retries)
+            retry: 1,
             throwOnError: (error: any) => {
-              // Appwrite unauthorized error (401) is expected for guests checking session status
-              if (
-                error &&
-                (error.code === 401 || error.type === "user_unauthorized")
-              ) {
+              if (error && error.code === 401) {
                 return false;
               }
-              // Allow all other errors (such as Appwrite 403 or network failures) to bubble up to error boundaries
               return true;
             },
           },

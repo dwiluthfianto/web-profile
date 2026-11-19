@@ -1,5 +1,9 @@
-import { account, databases } from "@/app/appwrite";
-import { Query } from "appwrite";
+import { authClient } from "@/lib/auth/client";
+import {
+  getSessionUser,
+  getUserProfileAction,
+  updateUserProfileAction,
+} from "@/lib/neon.actions";
 import z from "zod";
 
 export const ProfileSchema = z.object({
@@ -17,7 +21,16 @@ export const ProfileSchema = z.object({
 });
 
 export const getUser = async () => {
-  return await account.get();
+  try {
+    // Runs on browser: exchanges ?neon_auth_session_verifier on OAuth redirect & sets session cookie
+    const { data } = await authClient.getSession();
+    if (data?.user) {
+      return { ...data.user, $id: data.user.id };
+    }
+  } catch {
+    // Fallback to server session check
+  }
+  return await getSessionUser();
 };
 
 export const LoginSchema = z.object({
@@ -26,51 +39,31 @@ export const LoginSchema = z.object({
 });
 
 export const login = async (data: z.infer<typeof LoginSchema>) => {
-  return await account.createEmailPasswordSession(data.email, data.password);
+  const res = await authClient.signIn.email({
+    email: data.email,
+    password: data.password,
+  });
+  if (res.error) {
+    throw new Error(res.error.message || "Invalid email or password");
+  }
+  return res.data;
 };
 
 export const logout = async () => {
-  return await account.deleteSession("current");
+  const res = await authClient.signOut();
+  if (res.error) {
+    throw new Error(res.error.message || "Failed to sign out");
+  }
+  return res.data;
 };
 
 export const getUsersProfile = async () => {
-  return await databases
-    .listDocuments(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-      process.env.NEXT_PUBLIC_APPWRITE_PROFILE_COLLECTION_ID!,
-      [Query.limit(1)]
-    )
-    .then(function (response) {
-      return response.documents;
-    })
-    .catch(function (error) {
-      console.error(error);
-      throw error;
-    });
+  const profile = await getUserProfileAction();
+  return profile ? [profile] : [];
 };
 
 export const getUserProfile = async () => {
-  const users = await getUsersProfile();
-
-  if (!users || users.length === 0) {
-    return null;
-  }
-
-  const res = await databases
-    .getDocument(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-      process.env.NEXT_PUBLIC_APPWRITE_PROFILE_COLLECTION_ID!,
-      users[0].$id
-    )
-    .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      console.error(error);
-      throw error;
-    });
-
-  return res;
+  return await getUserProfileAction();
 };
 
 export const updateUserProfile = async (
@@ -78,11 +71,5 @@ export const updateUserProfile = async (
   data: z.infer<typeof ProfileSchema>
 ) => {
   const { imageFile, logoFile, ...payload } = data;
-
-  await databases.updateDocument(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    process.env.NEXT_PUBLIC_APPWRITE_PROFILE_COLLECTION_ID!,
-    documentId,
-    payload
-  );
+  await updateUserProfileAction(documentId, payload);
 };
