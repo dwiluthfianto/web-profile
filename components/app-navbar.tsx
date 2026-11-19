@@ -68,22 +68,22 @@ export function NavbarApp() {
         <NavBody>
           <NavbarLogo />
           <NavItems items={navItems} />
-          <div className='flex items-center gap-2.5'>
+          <div className='flex items-center gap-2 shrink-0'>
             <button
               type='button'
               onClick={openCommandPalette}
               title='Open Command Palette (Ctrl+K)'
-              className='relative z-20 inline-flex items-center gap-2 h-8 px-2.5 rounded-lg border border-border/70 bg-muted/40 hover:bg-accent/70 text-xs font-mono text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs active:scale-[0.98]'
+              className='relative z-20 inline-flex items-center gap-1.5 h-8 px-2 rounded-lg border border-border/70 bg-muted/40 hover:bg-accent/70 text-xs font-mono text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs active:scale-[0.98]'
             >
               <Search className='w-3.5 h-3.5' />
-              <kbd className='text-[10px] font-mono bg-background/80 px-1.5 py-0.5 rounded border border-border/60'>
+              <kbd className='text-[10px] font-mono bg-background/80 px-1 py-0.5 rounded border border-border/60 leading-none'>
                 ⌘K
               </kbd>
             </button>
 
             <NavbarButton
               variant='primary'
-              className='flex items-center gap-2'
+              className='flex items-center gap-1.5 px-3 py-1.5'
               href='/contact'
             >
               Let's talk <MoveUpRight width={16} />

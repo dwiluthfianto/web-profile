@@ -123,7 +123,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-xs font-sans uppercase tracking-widest text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "relative hidden flex-1 flex-row items-center justify-center space-x-1 text-xs font-sans uppercase tracking-widest text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex",
         className
       )}
     >
@@ -244,7 +244,7 @@ export const NavbarLogo = () => {
   return (
     <Link
       href='/'
-      className='relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-xs font-sans uppercase tracking-widest text-black dark:text-white'
+      className='relative z-20 mr-2 shrink-0 flex items-center space-x-2 px-2 py-1 text-xs font-sans uppercase tracking-widest text-black dark:text-white'
     >
       <img src={logo} alt='logo' width={30} height={30} />
       <span className='font-bold'>
