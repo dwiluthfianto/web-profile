@@ -10,7 +10,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { CircleUser, LogOut, MoveUpRight } from "lucide-react";
+import { CircleUser, LogOut, MoveUpRight, Search } from "lucide-react";
 import { useState } from "react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useUser, useUserMutations } from "@/hooks/useUser";
@@ -23,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import Link from "next/link";
+import { CommandPalette } from "./command-palette";
 
 export function NavbarApp() {
   const navItems = [
@@ -55,63 +56,45 @@ export function NavbarApp() {
     window.location.reload();
   };
 
-  return (
-    <Navbar className='top-0'>
-      {/* Desktop Navigation */}
-      <NavBody>
-        <NavbarLogo />
-        <NavItems items={navItems} />
-        <div className='flex items-center gap-4'>
-          <NavbarButton
-            variant='primary'
-            className='flex items-center gap-2'
-            href='contact'
-          >
-            Let's talk <MoveUpRight width={16} />
-          </NavbarButton>
-          {data && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild className='cursor-pointer'>
-                <Avatar>
-                  <AvatarFallback className='bg-green-100'>DW</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end'>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem asChild className='cursor-pointer'>
-                  <Link href={"/account"}>
-                    <CircleUser />
-                    Account
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className='cursor-pointer text-red-500 hover:bg-red-50 hover:text-red-600'
-                >
-                  <LogOut className='text-red-500' />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </div>
-      </NavBody>
+  const openCommandPalette = () => {
+    window.dispatchEvent(new Event("open-command-palette"));
+  };
 
-      {/* Mobile Navigation */}
-      <MobileNav>
-        <MobileNavHeader>
+  return (
+    <>
+      <CommandPalette />
+      <Navbar className='top-0'>
+        {/* Desktop Navigation */}
+        <NavBody>
           <NavbarLogo />
-          <div className='flex gap-2 items-center'>
-            <MobileNavToggle
-              isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            />
+          <NavItems items={navItems} />
+          <div className='flex items-center gap-2.5'>
+            <button
+              type='button'
+              onClick={openCommandPalette}
+              title='Open Command Palette (Ctrl+K)'
+              className='relative z-20 inline-flex items-center gap-2 h-8 px-2.5 rounded-lg border border-border/70 bg-muted/40 hover:bg-accent/70 text-xs font-mono text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs active:scale-[0.98]'
+            >
+              <Search className='w-3.5 h-3.5' />
+              <kbd className='text-[10px] font-mono bg-background/80 px-1.5 py-0.5 rounded border border-border/60'>
+                ⌘K
+              </kbd>
+            </button>
+
+            <NavbarButton
+              variant='primary'
+              className='flex items-center gap-2'
+              href='/contact'
+            >
+              Let's talk <MoveUpRight width={16} />
+            </NavbarButton>
             {data && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className='cursor-pointer'>
                   <Avatar>
-                    <AvatarFallback className='bg-green-100'>DW</AvatarFallback>
+                    <AvatarFallback className='bg-green-100 text-zinc-900 font-mono text-xs font-bold'>
+                      DW
+                    </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
@@ -134,34 +117,83 @@ export function NavbarApp() {
               </DropdownMenu>
             )}
           </div>
-        </MobileNavHeader>
+        </NavBody>
 
-        <MobileNavMenu
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        >
-          {navItems.map((item, idx) => (
-            <a
-              key={`mobile-link-${idx}`}
-              href={item.link}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className='relative text-neutral-600 dark:text-neutral-300 font-sans text-xs uppercase tracking-widest py-1'
-            >
-              <span className='block'>{item.name}</span>
-            </a>
-          ))}
-          <div className='flex w-full flex-col gap-4'>
-            <NavbarButton
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant='primary'
-              className='w-full'
-              href='contact'
-            >
-              Let's talk
-            </NavbarButton>
-          </div>
-        </MobileNavMenu>
-      </MobileNav>
-    </Navbar>
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <div className='flex gap-2 items-center'>
+              <button
+                type='button'
+                onClick={openCommandPalette}
+                title='Search (Ctrl+K)'
+                className='inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border/70 bg-muted/40 text-muted-foreground hover:text-foreground transition-all cursor-pointer'
+              >
+                <Search className='w-3.5 h-3.5' />
+              </button>
+              <MobileNavToggle
+                isOpen={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              />
+              {data && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild className='cursor-pointer'>
+                    <Avatar>
+                      <AvatarFallback className='bg-green-100 text-zinc-900 font-mono text-xs font-bold'>
+                        DW
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='end'>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuItem asChild className='cursor-pointer'>
+                      <Link href={"/account"}>
+                        <CircleUser />
+                        Account
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className='cursor-pointer text-red-500 hover:bg-red-50 hover:text-red-600'
+                    >
+                      <LogOut className='text-red-500' />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className='relative text-neutral-600 dark:text-neutral-300 font-sans text-xs uppercase tracking-widest py-1'
+              >
+                <span className='block'>{item.name}</span>
+              </a>
+            ))}
+            <div className='flex w-full flex-col gap-4'>
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant='primary'
+                className='w-full'
+                href='/contact'
+              >
+                Let's talk
+              </NavbarButton>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+    </>
   );
 }

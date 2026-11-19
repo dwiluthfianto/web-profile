@@ -60,15 +60,15 @@ export default function ContactPage() {
   };
 
   return (
-    <div className='p-4 space-y-8'>
-      <div className='flex item-center justify-between'>
-        <h1 className='text-3xl font-mono font-semibold flex items-center gap-2'>
+    <div className="p-4 space-y-8">
+      <div className="flex item-center justify-between">
+        <h1 className="text-3xl font-mono font-semibold flex items-center gap-2">
           Let's talk <MoveUpRight width={24} />
         </h1>
 
-        <Button variant={"ghost"} asChild className='cursor-pointer'>
-          <Link href={"mailto:dwi@trials.id"}>
-            <Mail /> dwi@trials.id
+        <Button variant={"ghost"} asChild className="cursor-pointer">
+          <Link href={"mailto:dwiluthfianto72@gmail.com"}>
+            <Mail /> dwiluthfianto72@gmail.com
           </Link>
         </Button>
       </div>
@@ -76,22 +76,22 @@ export default function ContactPage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='flex flex-col gap-4'
+            className="flex flex-col gap-4"
           >
-            <div className='grid grid-cols-2 gap-4'>
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name='name'
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className='text-red-500'>*</span>
+                      Name <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        type='text'
-                        placeholder='Enter your name'
+                        type="text"
+                        placeholder="Enter your name"
                       />
                     </FormControl>
                     <FormMessage />
@@ -100,17 +100,17 @@ export default function ContactPage() {
               />
               <FormField
                 control={form.control}
-                name='businessEmail'
+                name="businessEmail"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Business Email <span className='text-red-500'>*</span>
+                      Business Email <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        type='email'
-                        placeholder='Enter your business email'
+                        type="email"
+                        placeholder="Enter your business email"
                       />
                     </FormControl>
                     <FormMessage />
@@ -118,20 +118,20 @@ export default function ContactPage() {
                 )}
               />
             </div>
-            <div className='grid grid-cols-2 gap-4'>
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name='phoneNumber'
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Phone Number <span className='text-red-500'>*</span>
+                      Phone Number <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        type='tel'
-                        placeholder='Enter your phone number'
+                        type="tel"
+                        placeholder="Enter your phone number"
                       />
                     </FormControl>
                     <FormMessage />
@@ -140,15 +140,15 @@ export default function ContactPage() {
               />
               <FormField
                 control={form.control}
-                name='companyName'
+                name="companyName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        type='text'
-                        placeholder='Enter your company name'
+                        type="text"
+                        placeholder="Enter your company name"
                       />
                     </FormControl>
                     <FormMessage />
@@ -158,17 +158,17 @@ export default function ContactPage() {
             </div>
             <FormField
               control={form.control}
-              name='subject'
+              name="subject"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Subject <span className='text-red-500'>*</span>
+                    Subject <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      type='text'
-                      placeholder='Enter your subject'
+                      type="text"
+                      placeholder="Enter your subject"
                     />
                   </FormControl>
                   <FormMessage />
@@ -177,29 +177,29 @@ export default function ContactPage() {
             />
             <FormField
               control={form.control}
-              name='message'
+              name="message"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Message <span className='text-red-500'>*</span>
+                    Message <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Textarea {...field} placeholder='Enter your messages' />
+                    <Textarea {...field} placeholder="Enter your messages" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className='flex items-start gap-3'>
-              <Checkbox id='terms-2' onClick={() => setAcc(!acc)} />
-              <div className='grid gap-2'>
-                <Label htmlFor='terms-2'>
+            <div className="flex items-start gap-3">
+              <Checkbox id="terms-2" onClick={() => setAcc(!acc)} />
+              <div className="grid gap-2">
+                <Label htmlFor="terms-2">
                   I agree to receive emails and/or phone calls
                 </Label>
               </div>
             </div>
             <Button
-              type='submit'
+              type="submit"
               disabled={!acc || createMessageMutation.isPending}
             >
               {createMessageMutation.isPending ? "Submiting.." : "Submit"}

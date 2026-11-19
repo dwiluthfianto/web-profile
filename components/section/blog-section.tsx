@@ -9,7 +9,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Ellipsis, Eraser, SquarePen, BookOpen, Terminal } from "lucide-react";
+import { Ellipsis, Eraser, SquarePen, BookOpen, Terminal, Clock, Eye } from "lucide-react";
+import { estimateReadingMinutes } from "../blog-detail-view";
 import { useState } from "react";
 import { DeleteBlogDialog } from "@/app/(main)/blogs/delete-dialog";
 import { useUser } from "@/hooks/useUser";
@@ -134,20 +135,32 @@ export function BlogSection() {
 
                 {/* Blog Card */}
                 <div className='p-3.5 sm:p-4 rounded-xl border border-border/60 bg-background/80 dark:bg-zinc-900/60 hover:bg-accent/40 dark:hover:bg-zinc-800/40 hover:border-foreground/20 hover:shadow-xs transition-all duration-200'>
-                  {/* Meta: Date & Actions */}
+                  {/* Meta: Date, Read Time, Views & Actions */}
                   <div className='flex items-center justify-between gap-2 mb-2'>
-                    <span
-                      className='text-[11px] font-mono tracking-wider uppercase text-muted-foreground px-2 py-0.5 rounded-md bg-muted/60 border border-border/40'
-                      suppressHydrationWarning
-                    >
-                      {item.$createdAt
-                        ? new Date(item.$createdAt).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })
-                        : "Unknown Date"}
-                    </span>
+                    <div className='flex flex-wrap items-center gap-1.5'>
+                      <span
+                        className='text-[11px] font-mono tracking-wider uppercase text-muted-foreground px-2 py-0.5 rounded-md bg-muted/60 border border-border/40'
+                        suppressHydrationWarning
+                      >
+                        {item.$createdAt
+                          ? new Date(item.$createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })
+                          : "Unknown Date"}
+                      </span>
+                      <span className='inline-flex items-center gap-1 text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded-md bg-muted/40 border border-border/40'>
+                        <Clock className='w-2.5 h-2.5 text-sky-500/80' />
+                        {estimateReadingMinutes(item.content)} min read
+                      </span>
+                      {typeof item.views === "number" && (
+                        <span className='inline-flex items-center gap-1 text-[10px] font-mono text-muted-foreground px-2 py-0.5 rounded-md bg-muted/40 border border-border/40'>
+                          <Eye className='w-2.5 h-2.5 text-amber-500/80' />
+                          {item.views}
+                        </span>
+                      )}
+                    </div>
 
                     {user && (
                       <div className='flex items-center'>

@@ -1,35 +1,52 @@
-"use client";
-import { ReadOnlyViewer } from "@/components/blocks/editor-00/readonly-viewer";
-import { useBlogDetail } from "@/hooks/useBlog";
-import { useParams } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
+import { BlogDetailView } from "@/components/blog-detail-view";
+import { getBlogDetailAction } from "@/lib/neon.actions";
+import type { Metadata } from "next";
 
-export default function BlogDetailPage() {
-  const params = useParams<{ slug: string }>();
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const blog = await getBlogDetailAction(slug);
+    if (blog) {
+      return {
+        title: blog.title,
+        description: blog.description,
+        openGraph: {
+          title: blog.title,
+          description: blog.description,
+          type: "article",
+          publishedTime: blog.$createdAt,
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: blog.title,
+          description: blog.description,
+        },
+      };
+    }
+  } catch {
+    // Fallback metadata
+  }
+  return {
+    title: "Article",
+  };
+}
 
-  const { data, isPending } = useBlogDetail(params.slug);
+export default async function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  let initialBlog = null;
+  try {
+    initialBlog = await getBlogDetailAction(slug);
+  } catch {
+    // Client hook will retry if needed
+  }
 
-  return (
-    <div className='p-4 space-y-8'>
-      {isPending ? (
-        <div className='space-y-8'>
-          <Skeleton className='h-12 w-2/3 animate-pulse' />
-          <div className='space-y-4 pt-4'>
-            <Skeleton className='h-5 w-full animate-pulse' />
-            <Skeleton className='h-5 w-full animate-pulse' />
-            <Skeleton className='h-5 w-5/6 animate-pulse' />
-            <Skeleton className='h-5 w-4/5 animate-pulse' />
-          </div>
-        </div>
-      ) : data ? (
-        <div className='space-y-8 animate-fade-in'>
-          <h1 className='text-5xl font-bold'>{data.title}</h1>
-          <ReadOnlyViewer editorSerializedState={JSON.parse(data.content)} />
-        </div>
-      ) : (
-        <h1 className='text-center text-muted-foreground'>Blog not found</h1>
-      )}
-    </div>
-  );
+  return <BlogDetailView slug={slug} initialBlog={initialBlog} />;
 }

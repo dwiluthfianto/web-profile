@@ -204,7 +204,7 @@ export async function deleteProjectAction(documentId: string) {
 export async function listBlogsAction() {
   const sql = getDb();
   return await sql`
-    SELECT id AS "$id", title, description, content, slug, created_at::text AS "$createdAt"
+    SELECT id AS "$id", title, description, content, slug, COALESCE(views, 0) AS views, created_at::text AS "$createdAt"
     FROM blogs
     ORDER BY created_at DESC
   `;
@@ -213,12 +213,23 @@ export async function listBlogsAction() {
 export async function getBlogDetailAction(slug: string) {
   const sql = getDb();
   const rows = await sql`
-    SELECT id AS "$id", title, description, content, slug, created_at::text AS "$createdAt"
+    SELECT id AS "$id", title, description, content, slug, COALESCE(views, 0) AS views, created_at::text AS "$createdAt"
     FROM blogs
     WHERE slug = ${slug}
     LIMIT 1
   `;
   return rows[0] || null;
+}
+
+export async function incrementBlogViewsAction(slug: string) {
+  const sql = getDb();
+  const rows = await sql`
+    UPDATE blogs
+    SET views = COALESCE(views, 0) + 1
+    WHERE slug = ${slug}
+    RETURNING COALESCE(views, 0) AS views
+  `;
+  return rows[0]?.views ?? 0;
 }
 
 export async function createBlogAction(payload: {
